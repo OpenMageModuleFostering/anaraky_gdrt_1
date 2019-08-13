@@ -34,7 +34,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gdrt_enable>
-                        <gc_id>
+                        <gc_id translate="label">
                             <label>google_conversion_id</label>
                             <frontend_type>text</frontend_type>
                             <depends>
@@ -45,7 +45,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gc_id>
-                        <gc_label>
+                        <gc_label translate="label">
                             <label>google_conversion_label</label>
                             <frontend_type>text</frontend_type>
                             <comment>
@@ -59,7 +59,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gc_label>
-                        <gdrt_product_id>
+                        <gdrt_product_id translate="label">
                             <label>Use for product id</label>
                             <frontend_type>select</frontend_type>
                             <source_model>gdrt/adminhtml_system_config_source_useasid</source_model>
@@ -74,6 +74,21 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gdrt_product_id>
+                        <gdrt_tax translate="label">
+                            <label>Total value</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tax/system_config_source_priceType</source_model>
+                            <comment>
+                                The value of 'ecomm_totalvalue' with or without taxes?
+                            </comment>
+                            <depends>
+                                <gdrt_enable>1</gdrt_enable>
+                            </depends>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gdrt_tax>
                     </fields>
                 </general>
                 

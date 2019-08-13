@@ -4,7 +4,13 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
     private function getParams()
     {
         $storeId = Mage::app()->getStore()->getId();
-        $gdrt_pid = Mage::getStoreConfig('gdrt/general/gdrt_product_id', $storeId);
+        $gdrt_pid = false;
+        if ((int)Mage::getStoreConfig('gdrt/general/gdrt_product_id', $storeId) === 0)
+            $gdrt_pid = true;
+        
+        $inclTax = false;
+        if ((int)Mage::getStoreConfig('gdrt/general/gdrt_tax', $storeId) === 1)
+            $inclTax = true;
                 
         $type = $this->getData('pageType');
         $params = array('ecomm_pagetype' => 'siteview');
@@ -28,10 +34,12 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
             
             case 'product':
                 $product = Mage::registry('current_product');
+                $totalvalue = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), $inclTax);
+                        
                 $params = array(
-                    'ecomm_prodid' => (string)($gdrt_pid == 0 ? $product->getId() : $product->getSku()),
+                    'ecomm_prodid' => (string)($gdrt_pid ? $product->getId() : $product->getSku()),
                     'ecomm_pagetype' => 'product',
-                    'ecomm_totalvalue' =>  (float)number_format($product->getFinalPrice(), '2', '.', '')
+                    'ecomm_totalvalue' =>  (float)number_format($totalvalue, '2', '.', '')
                 );
                 unset($product);
                 break;
@@ -39,20 +47,22 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
             case 'cart':
                 $cart = Mage::getSingleton('checkout/session')->getQuote();
                 $items = $cart->getAllVisibleItems();
+                
                 if (count($items) > 0) {
                     $data  = array();
-                    
+                    $totalvalue = 0;
                     foreach ($items as $item)
                     {
-                        $data[0][] = (string)($gdrt_pid == 0 ? $item->getProductId() : $item->getSku());
+                        $data[0][] = (string)($gdrt_pid ? $item->getProductId() : $item->getSku());
                         $data[1][] = (int)$item->getQty();
+                        $totalvalue += $inclTax ? $item->getRowTotalInclTax() : $item->getRowTotal();
                     }
-                    
+
                     $params = array(
                         'ecomm_prodid' => $data[0],
                         'ecomm_pagetype' => 'cart',
                         'ecomm_quantity' => $data[1],
-                        'ecomm_totalvalue' => (float)number_format($cart->getGrandTotal(), '2', '.', '')
+                        'ecomm_totalvalue' => (float)number_format($totalvalue, '2', '.', '')
                     );
                 }
                 else
@@ -62,27 +72,28 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                 break;
             
             case 'purchase':
-                //$cart = Mage::getSingleton('checkout/session')->getQuote();
-                //$items = $cart->getAllVisibleItems();
-
                 $order = Mage::getModel('sales/order')->loadByIncrementId(
                                 Mage::getSingleton('checkout/session')
                                             ->getLastRealOrderId());
-                $items = $order->getAllItems();
-                $data  = array();
 
+                $data  = array();
+                $totalvalue = 0;
+                $items = $order->getAllItems();
+                
                 foreach ($items as $item)
                 {
-                    $data[0][] = (string)($gdrt_pid == 0 ? $item->getProductId() : $item->getSku());
+                    $data[0][] = (string)($gdrt_pid ? $item->getProductId() : $item->getSku());
                     $data[1][] = (int)$item->getQtyToInvoice();
+                    $totalvalue += $inclTax ? $item->getRowTotalInclTax() : $item->getRowTotal();
                 }
-
+                
                 $params = array(
                     'ecomm_prodid' => $data[0],
                     'ecomm_pagetype' => 'purchase',
                     'ecomm_quantity' => $data[1],
-                    'ecomm_totalvalue' => (float)number_format($order->getSubtotal(), '2', '.', '')
+                    'ecomm_totalvalue' => (float)number_format($totalvalue, '2', '.', '')
                 );
+                unset($order, $items, $item);
                 break;
             
             default:
