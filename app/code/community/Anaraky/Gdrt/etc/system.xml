@@ -153,6 +153,31 @@
                         </purchase>
                     </fields>
                 </pages>
+				
+				<debug translate="label">
+					<label>Debug</label>
+					<comment>
+						<![CDATA[
+						Highly recommended to set the "Allowed IPs" in the "Developer Client Restrictions" 
+						(System > Configuration > Developer). 
+						]]>
+					</comment>
+					<sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<show_info>
+							<label>Show page information</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</show_info>
+					</fields>
+				</debug>
             </groups>
         </gdrt>
     </sections>

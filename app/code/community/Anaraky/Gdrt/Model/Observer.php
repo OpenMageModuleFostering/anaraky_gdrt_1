@@ -27,8 +27,13 @@ class Anaraky_Gdrt_Model_Observer {
                                   <key>pageType</key>
                                   <value>' . $pageType . '</value>
                               </action>
+                              <action method="setData">
+                                  <key>pagePath</key>
+                                  <value>' . $mName . '/' . $cName . '/' . $aName . '</value>
+                              </action>
                           </block>
                       </reference>';
+			
             $layout->getUpdate()->addUpdate($block);
             return $this;
         }
