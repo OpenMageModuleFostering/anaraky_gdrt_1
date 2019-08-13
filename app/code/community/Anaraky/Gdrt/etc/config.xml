@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Anaraky_Gdrt>
-            <version>1.0.6</version>
+            <version>1.0.7</version>
         </Anaraky_Gdrt>
     </modules>
     
@@ -27,8 +27,12 @@
     <default>
         <gdrt>
             <general>
-                <gdrt_enable>1</gdrt_enable>
+                <gdrt_enable>0</gdrt_enable>
                 <gdrt_product_id>1</gdrt_product_id>
+                <gdrt_product_id_prefix></gdrt_product_id_prefix>
+                <gdrt_product_id_prefix_ofcp>0</gdrt_product_id_prefix_ofcp>
+                <gdrt_product_id_ending></gdrt_product_id_ending>
+                <gdrt_product_id_ending_ofcp>0</gdrt_product_id_ending_ofcp>
                 <gdrt_tax>0</gdrt_tax>
             </general>
             <pages>
