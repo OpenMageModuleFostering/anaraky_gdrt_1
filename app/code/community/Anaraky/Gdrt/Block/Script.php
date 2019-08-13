@@ -81,7 +81,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                     'ecomm_prodid' => $data[0],
                     'ecomm_pagetype' => 'purchase',
                     'ecomm_quantity' => $data[1],
-                    'ecomm_totalvalue' => (float)number_format($order->getGrandTotal(), '2', '.', '')
+                    'ecomm_totalvalue' => (float)number_format($order->getSubtotal(), '2', '.', '')
                 );
                 break;
             
