@@ -88,7 +88,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                     $totalvalue = 0;
                     foreach ($items as $item)
                     {
-                        $data[0][] = $this->getEcommProdid($product);
+                        $data[0][] = $this->getEcommProdid($item);
                         $data[1][] = (int)$item->getQty();
                         $totalvalue += $inclTax ? $item->getRowTotalInclTax() : $item->getRowTotal();
                     }
@@ -117,7 +117,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                 
                 foreach ($items as $item)
                 {
-                    $data[0][] = $this->getEcommProdid($product);
+                    $data[0][] = $this->getEcommProdid($item);
                     $data[1][] = (int)$item->getQtyToInvoice();
                     $totalvalue += $inclTax ? $item->getRowTotalInclTax() : $item->getRowTotal();
                 }
@@ -233,6 +233,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
         
         if ((int)Mage::getStoreConfig('gdrt/debug/show_info', $this->_storeId) === 1)
         {
+            $version = (string)Mage::getConfig()->getNode()->modules->Anaraky_Gdrt->version;
             $lk = str_replace(' ', '', Mage::getStoreConfig('dev/restrict/allow_ips', $this->_storeId));
             $ips = explode(',', $lk);
             if (empty($ips[0]) || in_array(Mage::helper('core/http')->getRemoteAddr(), $ips))
@@ -241,7 +242,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                     '<div style="position:fixed; left:0; right:0; bottom:0; padding:5px 0; background:rgba(255, 208, 202, 0.8); border:1px solid #f92104;">' . PHP_EOL .
                     '    <table style="margin:0 auto;font-size:13px;color:#222;">' .
                     '        <tr>' .
-                    '           <td rowspan="' . (count($gcParams) + 1) . '" style="vertical-align:middle;padding-right:40px;"><h3 style="margin:0;">Anaraky GDRT debug</h3></td>' .
+                    '           <td rowspan="' . (count($gcParams) + 1) . '" style="vertical-align:middle;padding-right:40px;"><h3 style="margin:0;">Anaraky GDRT debug v.' . $version . '</h3></td>' .
                     '           <td style="text-align:right;font-weight:bold;">Model/Controller/Action: &nbsp;</td>' .
                     '           <td style="text-align:left;"> ' . $this->getData('pagePath') . '</td>' . 
                     '        </tr>' .
