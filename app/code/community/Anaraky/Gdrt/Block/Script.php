@@ -88,7 +88,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                     $totalvalue = 0;
                     foreach ($items as $item)
                     {
-                        $data[0][] = $this->getEcommProdid($item);
+                        $data[0][] = $this->getEcommProdid($item->getProduct());
                         $data[1][] = (int)$item->getQty();
                         $totalvalue += $inclTax ? $item->getRowTotalInclTax() : $item->getRowTotal();
                     }
@@ -117,7 +117,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                 
                 foreach ($items as $item)
                 {
-                    $data[0][] = $this->getEcommProdid($item);
+                    $data[0][] = $this->getEcommProdid($item->getProduct());
                     $data[1][] = (int)$item->getQtyToInvoice();
                     $totalvalue += $inclTax ? $item->getRowTotalInclTax() : $item->getRowTotal();
                 }
@@ -212,8 +212,11 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
         $gcId = (int)Mage::getStoreConfig('gdrt/general/gc_id', $this->_storeId);
         $gcLabel = trim(Mage::getStoreConfig('gdrt/general/gc_label', $this->_storeId));
         $gcParams = $this->getParams();
+
+        $version = (string)Mage::getConfig()->getNode()->modules->Anaraky_Gdrt->version;
         
         $s = PHP_EOL .
+            '<!-- Anaraky GDRT v.' . $version . ' script begin -->' . PHP_EOL .
             '<script type="text/javascript">' . PHP_EOL .
             '/* <![CDATA[ */' . PHP_EOL .
             'var google_tag_params = {' . $this->paramsToJS($gcParams) . '};' . PHP_EOL .
@@ -229,11 +232,11 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
             '<div style="display:inline;">' . PHP_EOL .
             '<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/' . $gcId . '/?value=0' . (!empty($gcLabel) ? '&amp;label=' . $gcLabel : '') . '&amp;guid=ON&amp;script=0&amp;data=' . $this->paramsToURL($gcParams) . '"/>' . PHP_EOL .
             '</div>' . PHP_EOL .
-            '</noscript>';
+            '</noscript>' . PHP_EOL .
+            '<!-- Anaraky GDRT script end -->' . PHP_EOL;
         
         if ((int)Mage::getStoreConfig('gdrt/debug/show_info', $this->_storeId) === 1)
         {
-            $version = (string)Mage::getConfig()->getNode()->modules->Anaraky_Gdrt->version;
             $lk = str_replace(' ', '', Mage::getStoreConfig('dev/restrict/allow_ips', $this->_storeId));
             $ips = explode(',', $lk);
             if (empty($ips[0]) || in_array(Mage::helper('core/http')->getRemoteAddr(), $ips))
