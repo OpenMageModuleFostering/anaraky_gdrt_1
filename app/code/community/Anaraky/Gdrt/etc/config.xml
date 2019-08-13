@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Anaraky_Gdrt>
+            <version>1.0.1</version>
+        </Anaraky_Gdrt>
+    </modules>
+    
+    <global>
+        <models>
+            <gdrt>
+                <class>Anaraky_Gdrt_Model</class>
+            </gdrt>
+        </models>
+        <helpers>
+            <gdrt>
+                <class>Anaraky_Gdrt_Helper</class>
+            </gdrt>
+        </helpers>
+        <blocks>
+            <gdrt>
+                <class>Anaraky_Gdrt_Block</class>
+            </gdrt>
+        </blocks>
+    </global>
+    
+    <default>
+        <gdrt>
+            <general>
+                <gdrt_enable>0</gdrt_enable>
+            </general>
+            <pages>
+                <home>cms/index/index</home>
+                <searchresults>catalogsearch/result/index</searchresults>
+                <category>catalog/category/view</category>
+                <product>catalog/product/view</product>
+                <cart>checkout/cart/index</cart>
+                <purchase>checkout/onepage/index</purchase>
+            </pages>
+        </gdrt>
+    </default>
+    
+    <frontend>
+        <events>
+            <controller_action_layout_generate_xml_before>
+                <observers>
+                    <gdrt_add_block>
+                        <type>singleton</type>
+                        <class>gdrt/observer</class>
+                        <method>addGdrtBlock</method>
+                    </gdrt_add_block>
+                </observers>
+            </controller_action_layout_generate_xml_before>
+        </events>
+    </frontend>
+</config>
