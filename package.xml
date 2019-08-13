@@ -1,20 +1,19 @@
 <?xml version="1.0"?>
 <package>
     <name>Anaraky_GDRT_1</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <stability>stable</stability>
     <license uri="http://www.gnu.org/licenses/gpl.html">GNU General Public License</license>
     <channel>community</channel>
     <extends/>
     <summary>Google Dynamic Remarketing Tag extension for Magento</summary>
     <description>With this extension is simply and easy to integrate the Google Dynamic Remarketing Tag into Magento.</description>
-    <notes>Updates:&#xD;
-* fixed bug: "Attribute key contains space or non-ASCII characters" (thanks x-magneto for defining a bug);&#xD;
-* fixed problem on &#x201C;purchase&#x201D; window (thanks chris r for defining a problem);</notes>
+    <notes>Update:&#xD;
+* Added the ability to define what to use for ecomm_prodid (Produkt ID or Product SKU).</notes>
     <authors><author><name>Vladas Tomkevicius</name><user>Neodan</user><email>neodann@gmail.com</email></author></authors>
-    <date>2013-08-21</date>
-    <time>20:07:01</time>
-    <contents><target name="magecommunity"><dir name="Anaraky"><dir name="Gdrt"><dir name="Block"><file name="Script.php" hash="48fc20cc30af448bb90a29fb61f6f91c"/></dir><dir name="Helper"><file name="Data.php" hash="e1dfad9d739c7c3bc6094abae0af01e7"/></dir><dir name="Model"><file name="Observer.php" hash="36f4dfb4171c670b867d881bde03305d"/></dir><dir name="etc"><file name="adminhtml.xml" hash="03a29217c242534e2f13fe79e5fb43c7"/><file name="config.xml" hash="8bac280f49b474b1049a9e1bf7d8c87b"/><file name="system.xml" hash="acdf972eba3a3c42edb738158954779e"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Anaraky_Gdrt.xml" hash="43fa98d76721559c9ca20636dcb6af61"/></dir></target></contents>
+    <date>2013-08-27</date>
+    <time>18:27:33</time>
+    <contents><target name="magecommunity"><dir name="Anaraky"><dir name="Gdrt"><dir name="Block"><file name="Script.php" hash="3ee61f382f53e2a31f28f9c352c2f9db"/></dir><dir name="Helper"><file name="Data.php" hash="e1dfad9d739c7c3bc6094abae0af01e7"/></dir><dir name="Model"><dir name="Adminhtml"><dir name="System"><dir name="Config"><dir name="Source"><file name="Useasid.php" hash="d0f1371d883f6dd3af422e907770ee87"/></dir></dir></dir></dir><file name="Observer.php" hash="36f4dfb4171c670b867d881bde03305d"/></dir><dir name="etc"><file name="adminhtml.xml" hash="03a29217c242534e2f13fe79e5fb43c7"/><file name="config.xml" hash="27e0e7ead63a9abc19864f7c25290b9a"/><file name="system.xml" hash="f775db789d4219d78f1afc987718f052"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Anaraky_Gdrt.xml" hash="43fa98d76721559c9ca20636dcb6af61"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php><package><name>Mage_Core_Modules</name><channel>community</channel><min>1.5.1.0</min><max>1.7.0.2</max></package></required></dependencies>
 </package>

@@ -3,6 +3,9 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
     
     private function getParams()
     {
+        $storeId = Mage::app()->getStore()->getId();
+        $gdrt_pid = Mage::getStoreConfig('gdrt/general/gdrt_product_id', $storeId);
+                
         $type = $this->getData('pageType');
         $params = array('ecomm_pagetype' => 'siteview');
         switch ($type) {
@@ -26,7 +29,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
             case 'product':
                 $product = Mage::registry('current_product');
                 $params = array(
-                    'ecomm_prodid' => (string)$product->getSku(),
+                    'ecomm_prodid' => (string)($gdrt_pid == 0 ? $product->getId() : $product->getSku()),
                     'ecomm_pagetype' => 'product',
                     'ecomm_totalvalue' =>  (float)number_format($product->getFinalPrice(), '2', '.', '')
                 );
@@ -41,7 +44,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                     
                     foreach ($items as $item)
                     {
-                        $data[0][] = (string)$item->getSku();
+                        $data[0][] = (string)($gdrt_pid == 0 ? $item->getProductId() : $item->getSku());
                         $data[1][] = (int)$item->getQty();
                     }
                     
@@ -70,7 +73,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
 
                 foreach ($items as $item)
                 {
-                    $data[0][] = (string)$item->getSku();
+                    $data[0][] = (string)($gdrt_pid == 0 ? $item->getProductId() : $item->getSku());
                     $data[1][] = (int)$item->getQtyToInvoice();
                 }
 

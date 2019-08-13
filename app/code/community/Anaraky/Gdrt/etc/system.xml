@@ -59,6 +59,21 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gc_label>
+                        <gdrt_product_id>
+                            <label>Use for product id</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>gdrt/adminhtml_system_config_source_useasid</source_model>
+                            <comment>
+                                Must be same as 'Product ID' in the data feeds of the Google Merchant
+                            </comment>
+                            <depends>
+                                <gdrt_enable>1</gdrt_enable>
+                            </depends>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gdrt_product_id>
                     </fields>
                 </general>
                 
