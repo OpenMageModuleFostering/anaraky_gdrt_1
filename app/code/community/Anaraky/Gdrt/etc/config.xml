@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Anaraky_Gdrt>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </Anaraky_Gdrt>
     </modules>
     
@@ -35,7 +35,7 @@
                 <category>catalog/category/view</category>
                 <product>catalog/product/view</product>
                 <cart>checkout/cart/index</cart>
-                <purchase>checkout/onepage/index</purchase>
+                <purchase>checkout/onepage/success</purchase>
             </pages>
         </gdrt>
     </default>

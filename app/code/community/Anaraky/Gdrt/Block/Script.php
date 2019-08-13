@@ -53,27 +53,32 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
                     );
                 }
                 else
-                    $params = array( 'ecomm_pagetype: "cart"' );
+                    $params = array( 'ecomm_pagetype' => 'siteview' );
                 
                 unset($cart, $items, $item, $data);
                 break;
             
             case 'purchase':
-                $cart = Mage::getSingleton('checkout/session')->getQuote();
-                $items = $cart->getAllVisibleItems();
+                //$cart = Mage::getSingleton('checkout/session')->getQuote();
+                //$items = $cart->getAllVisibleItems();
+
+                $order = Mage::getModel('sales/order')->loadByIncrementId(
+                                Mage::getSingleton('checkout/session')
+                                            ->getLastRealOrderId());
+                $items = $order->getAllItems();
                 $data  = array();
 
                 foreach ($items as $item)
                 {
                     $data[0][] = (string)$item->getSku();
-                    $data[1][] = (int)$item->getQty();
+                    $data[1][] = (int)$item->getQtyToInvoice();
                 }
 
                 $params = array(
                     'ecomm_prodid' => $data[0],
                     'ecomm_pagetype' => 'purchase',
                     'ecomm_quantity' => $data[1],
-                    'ecomm_totalvalue' => (float)number_format($cart->getGrandTotal(), '2', '.', '')
+                    'ecomm_totalvalue' => (float)number_format($order->getGrandTotal(), '2', '.', '')
                 );
                 break;
             
@@ -103,7 +108,7 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
             elseif (is_string($value))
                 $value = '"' . $value . '"';
 
-            $result[] = '\'' . $key . '\': ' . $value;
+            $result[] = $key . ': ' . $value;
         }
         
         return PHP_EOL . "\t" . implode(',' . PHP_EOL . "\t", $result) . PHP_EOL;
@@ -134,10 +139,10 @@ class Anaraky_Gdrt_Block_Script extends Mage_Core_Block_Abstract {
         $s = PHP_EOL .
             '<script type="text/javascript">' . PHP_EOL .
             '/* <![CDATA[ */' . PHP_EOL .
-            'var window.google_tag_params = {' . $this->paramsToJS($gcParams) . '};' . PHP_EOL .
+            'var google_tag_params = {' . $this->paramsToJS($gcParams) . '};' . PHP_EOL .
             'var google_conversion_id = ' . $gcId . ';' . PHP_EOL .
             (!empty($gcLabel) ? 'var google_conversion_label = "' . $gcLabel . '";' . PHP_EOL : '') .
-            'var google_custom_params = window.google_tag_params;' . PHP_EOL .
+            'var google_custom_params = google_tag_params;' . PHP_EOL .
             'var google_remarketing_only = true;' . PHP_EOL .
             '/* ]]> */' . PHP_EOL .
             '</script>' . PHP_EOL .
