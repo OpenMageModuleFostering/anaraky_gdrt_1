@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Anaraky_GDRT_1",
+    "name": "OpenMageModuleFostering\/Anaraky_GDRT_1",
     "type": "magento-module",
     "license": "GNU-General-Public-License",
     "homepage": "",
     "description": "Google Dynamic Remarketing Tag extension for Magento",
     "authors": [
-    {
-        "name": "Vladas Tomkevicius",
-        "email": "neodann@gmail.com"
-    }
-],
+        {
+            "name": "Vladas Tomkevicius",
+            "email": "neodann@gmail.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
